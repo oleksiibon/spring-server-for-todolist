@@ -1,6 +1,8 @@
 package letscode.todolistSpring.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import letscode.todolistSpring.domain.List;
 
 @Entity
@@ -8,14 +10,21 @@ import letscode.todolistSpring.domain.List;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
     private String name;
     private Boolean done;
-    private Long listId;
+    @ManyToOne()
+    @JoinColumn(name = "list_id")
+    @JsonIgnore
+    private List list;
 
     public Task() {
+    }
 
+    public Task(String name, Boolean done, List list) {
+        this.name = name;
+        this.done = done;
+        this.list = list;
     }
 
     public Long getId() {
@@ -38,15 +47,15 @@ public class Task {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(Boolean done) {
         this.done = done;
     }
 
-    public Long getListId() {
-        return listId;
+    public List getList() {
+        return list;
     }
 
-    public void setListId(Long listId) {
-        this.listId = listId;
+    public void setList(List list) {
+        this.list = list;
     }
 }

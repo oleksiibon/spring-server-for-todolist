@@ -1,6 +1,9 @@
 package letscode.todolistSpring.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -10,6 +13,8 @@ public class List {
     private Long Id;
     private String name;
     private Boolean pin;
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL)
+    public Set<Task> tasks;
 
     public Boolean isPin() {
         return pin;
